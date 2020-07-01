@@ -4,43 +4,33 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    private Camera camera;      // カメラの情報
+    [SerializeField]
+    private Camera camera;                // カメラの情報
 
     [SerializeField]
-    private GameObject   target;     // カメラのターゲット
+    private GameObject player;            // 回転の中心となるプレイヤー格納用
 
-    // Start is called before the first frame update
+    [SerializeField]
+    private float speed = 2.0f;            // 回転速度
+
+    //呼び出し時に実行される関数
     void Start()
     {
-        camera = this.GetComponent<Camera>();
     }
 
     void Update()
     {
-        Movement();
+        Rotation();
     }
 
-    /// 仮の移動処理
-    private void Movement()
+    // カメラの回転を行う
+    private void Rotation()
     {
-        if (Input.GetAxis("Vertical2") < 0 )
-        {
-            camera.transform.RotateAround(target.transform.position, this.transform.right, 100 * Time.deltaTime);
-        }
-        else if (Input.GetAxis("Vertical2") > 0)
-        {
-            camera.transform.RotateAround(target.transform.position, this.transform.right, -100 * Time.deltaTime);
-        }
-        else {}
+        //Vector3でX,Y方向の回転の度合いを定義
+        Vector3 angle = new Vector3(Input.GetAxis("Mouse X") * speed, Input.GetAxis("Mouse Y") * speed, 0);
 
-        if (Input.GetAxis("Horizontal2") < 0)
-        {
-            camera.transform.RotateAround(target.transform.position, Vector3.up, 100 * Time.deltaTime);
-        }
-        else if (Input.GetAxis("Horizontal2") > 0)
-        {
-            camera.transform.RotateAround(target.transform.position, Vector3.up, -100 * Time.deltaTime);
-        }
-        else {}
+        /// カメラの回転
+        camera.transform.RotateAround(player.transform.position, Vector3.up, angle.x);
+        camera.transform.RotateAround(player.transform.position, transform.right, angle.y);
     }
 }

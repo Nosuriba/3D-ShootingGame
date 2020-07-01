@@ -4,42 +4,52 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    private Vector3 _vel;           // 速度
     void Start()
     {
-
+        _vel = new Vector3(0, 0, 0);
     }
 
     void Update()
     {
         Movement();
+        Jumping();
+
+        /// 速度の更新
+        this.transform.position += _vel;
     }
 
     /// 仮の移動処理
     private void Movement()
     {
-        if (Input.GetAxis("Vertical") < 0)
+        /// 速度の初期化
+        _vel.x = _vel.z = 0;
+        if (Input.GetKey(KeyCode.W))
         {
-            this.transform.position += new Vector3(0, 0, -1);
+            _vel.z = 0.3f;
         }
-        else if (Input.GetAxis("Vertical") > 0)
+        else if (Input.GetKey(KeyCode.S))
         {
-            this.transform.position += new Vector3(0, 0, 1);
+            _vel.z = -0.3f;
         }
         else { }
 
-        if (Input.GetAxis("Horizontal") < 0)
+        if (Input.GetKey(KeyCode.D))
         {
-            this.transform.position += new Vector3(-1, 0, 0);
+            _vel.x = 0.3f;
         }
-        else if (Input.GetAxis("Horizontal") > 0)
+        else if (Input.GetKey(KeyCode.A))
         {
-            this.transform.position += new Vector3(1, 0, 0);
+            _vel.x = -0.3f;
         }
         else { }
     }
 
     private void Jumping()
     {
-
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _vel.y = 6.0f;
+        }
     }
 }
