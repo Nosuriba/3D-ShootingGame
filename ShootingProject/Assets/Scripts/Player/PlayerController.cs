@@ -6,7 +6,10 @@ public class PlayerController : MonoBehaviour
 {
     private Vector3 _vel;                       // 速度
 
-    private Rigidbody rb;                       // RigidBodyの情報取得用  
+    private Rigidbody rb;                       // RigidBodyの情報取得用 
+
+    [SerializeField]
+    private Camera camera;
 
     [SerializeField]
     private const float _jumpSpeed = 1.0f;      // ジャンプ時の速度
@@ -18,6 +21,7 @@ public class PlayerController : MonoBehaviour
     {
         _vel    = new Vector3(0, 0, 0);
         rb      = GetComponent<Rigidbody>();
+        camera  = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
         _isJump = false;
     }
 
@@ -34,8 +38,10 @@ public class PlayerController : MonoBehaviour
             Falling();
         }
         /// 速度の更新
-        this.transform.position += _vel;
-    }
+        // this.transform.position += _vel;
+
+        this.transform.localEulerAngles = new Vector3(0, camera.transform.eulerAngles.y, 0);
+    }   
 
     /// 移動処理
     private void Movement()
@@ -44,21 +50,23 @@ public class PlayerController : MonoBehaviour
         _vel.x = _vel.z = 0;
         if (Input.GetKey(KeyCode.W))
         {
-            _vel.z = 0.3f;
+            // _vel.z = 0.3f;
+
+            this.transform.position += Vector3.forward * Time.deltaTime * 3;
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            _vel.z = -0.3f;
+            this.transform.position += Vector3.forward * Time.deltaTime * -3;
         }
         else { }
 
         if (Input.GetKey(KeyCode.D))
         {
-            _vel.x = 0.3f;
+            this.transform.position += Vector3.right * Time.deltaTime * 3;
         }
         else if (Input.GetKey(KeyCode.A))
         {
-            _vel.x = -0.3f;
+            this.transform.position += Vector3.right * Time.deltaTime/* * 0.3f*/;
         }
         else { }
     }

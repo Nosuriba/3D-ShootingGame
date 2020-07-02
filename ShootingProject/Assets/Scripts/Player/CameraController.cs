@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField]
     private Camera camera;                // カメラの情報
 
     [SerializeField]
@@ -16,6 +15,7 @@ public class CameraController : MonoBehaviour
     //呼び出し時に実行される関数
     void Start()
     {
+        camera = GetComponent<Camera>();
     }
 
     void Update()
@@ -27,7 +27,7 @@ public class CameraController : MonoBehaviour
     private void Rotation()
     {
         //Vector3でX,Y方向の回転の度合いを定義
-        Vector3 angle = new Vector3(Input.GetAxis("Mouse X") * speed, Input.GetAxis("Mouse Y") * speed, 0);
+        Vector3 angle = new Vector3(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"), 0);
 
         /// カメラの回転
         camera.transform.RotateAround(player.transform.position, Vector3.up, angle.x);
