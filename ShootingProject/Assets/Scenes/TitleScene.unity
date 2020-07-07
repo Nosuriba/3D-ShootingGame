@@ -404,6 +404,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1940563343}
   speed: 2
+  vAngle: 70
 --- !u!1 &1940563343
 GameObject:
   m_ObjectHideFlags: 0
@@ -528,4 +529,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55afc40afbee44242ba65c48ef9fa87d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 0}
+  camera: {fileID: 1744585865}

@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private Vector3 _vel;                       // 速度
-
-    private Rigidbody rb;                       // RigidBodyの情報取得用 
-
     [SerializeField]
-    private Camera camera;
+    private Camera _camera;
 
-    [SerializeField]
+    private Rigidbody _rigidBody;
+
+    private float _speed;
+
     private const float _jumpSpeed = 1.0f;      // ジャンプ時の速度
 
     private bool _isJump;                       // true : ジャンプ可能, false : ジャンプ不可能
@@ -19,16 +18,16 @@ public class PlayerController : MonoBehaviour
     private const float _maxFallSpeed = -1.0f;  // 落下時の最大速度
     void Start()
     {
-        _vel    = new Vector3(0, 0, 0);
-        rb      = GetComponent<Rigidbody>();
-        camera  = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
-        _isJump = false;
+        _camera     = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
+        _rigidBody  = GetComponent<Rigidbody>();
+        _speed      = 0f;
+        _isJump     = false;
     }
 
     void Update()
     {
         Movement();
-        if (Input.GetKeyDown(KeyCode.Space) && _isJump)
+        if (Input.GetKeyDown(KeyCode.Space)/* && _isJump*/)
         {
             Jumping();
         }
@@ -37,36 +36,35 @@ public class PlayerController : MonoBehaviour
         {
             Falling();
         }
-        /// 速度の更新
-        // this.transform.position += _vel;
 
-        this.transform.localEulerAngles = new Vector3(0, camera.transform.eulerAngles.y, 0);
+        /// ジャンプ処理
+          this.transform.position += Vector3.up * _speed;
+        // _rigidBody.MovePosition(this.transform.position + (Vector3.up * _speed) * Time.deltaTime);
+
+        /// カメラの正面方向に角度を合わせる
+        this.transform.localEulerAngles = new Vector3(0, _camera.transform.eulerAngles.y, 0);
     }   
 
     /// 移動処理
     private void Movement()
     {
-        /// 速度の初期化
-        _vel.x = _vel.z = 0;
         if (Input.GetKey(KeyCode.W))
         {
-            // _vel.z = 0.3f;
-
-            this.transform.position += Vector3.forward * Time.deltaTime * 3;
+            this.transform.position += transform.forward;
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            this.transform.position += Vector3.forward * Time.deltaTime * -3;
+            this.transform.position += -transform.forward;
         }
         else { }
 
         if (Input.GetKey(KeyCode.D))
         {
-            this.transform.position += Vector3.right * Time.deltaTime * 3;
+            this.transform.position += transform.right;
         }
         else if (Input.GetKey(KeyCode.A))
         {
-            this.transform.position += Vector3.right * Time.deltaTime/* * 0.3f*/;
+            this.transform.position += -transform.right;
         }
         else { }
     }
@@ -75,13 +73,13 @@ public class PlayerController : MonoBehaviour
     private void Jumping()
     {
         _isJump = false;
-        _vel.y  = _jumpSpeed;
+        _speed  = _jumpSpeed;
     }
 
     private void Falling()
     {
         /// 落下速度の調整
-        _vel.y = (_vel.y >= _maxFallSpeed ? _vel.y - 0.05f : _vel.y);
+        _speed = (_speed >= _maxFallSpeed ? _speed - 0.02f : _speed);
     }
 
     // 当たり判定が行われている間に入る
@@ -92,7 +90,17 @@ public class PlayerController : MonoBehaviour
         if (col.gameObject.CompareTag("Floor"))
         {
             _isJump = true;
+            _speed  = 0;
         }
     }
 
+    private void OnCollisionExit(Collision col)
+    {
+        if (_isJump)
+        {
+            _speed = 0;
+        }
+       
+        _isJump = false;
+    }
 }
