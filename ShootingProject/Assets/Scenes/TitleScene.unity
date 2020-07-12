@@ -404,7 +404,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1940563343}
   speed: 2
-  vAngle: 70
+  vAngle: 30
 --- !u!1 &1940563343
 GameObject:
   m_ObjectHideFlags: 0
@@ -417,8 +417,8 @@ GameObject:
   - component: {fileID: 1940563347}
   - component: {fileID: 1940563346}
   - component: {fileID: 1940563345}
-  - component: {fileID: 1940563349}
   - component: {fileID: 1940563344}
+  - component: {fileID: 1940563349}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -436,11 +436,11 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 4
   m_CollisionDetection: 0
 --- !u!65 &1940563345
 BoxCollider:
@@ -529,4 +529,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55afc40afbee44242ba65c48ef9fa87d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 1744585865}
+  _camera: {fileID: 1744585865}

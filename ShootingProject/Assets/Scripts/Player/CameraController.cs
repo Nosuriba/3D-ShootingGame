@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    private Camera camera;                // カメラの情報
-
     [SerializeField]
     private GameObject player;            // 回転の中心となるプレイヤー格納用
 
     [SerializeField]
-    private float speed = 2.0f;            // 回転速度
+    private float speed = 2.0f;           // 回転速度
 
     [SerializeField]
-    private float vAngle= 70;              // 縦角度の限界値 
+    private float vAngle= 50;             // 縦角度の限界値 
 
+    private Camera camera;                // カメラの情報
+
+    private float preRotaX;
     private float preX;                 
     private float nowX;
 
@@ -22,7 +23,8 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         camera = GetComponent<Camera>();
-        preX = nowX = 0f;
+        preX   = nowX = 0f;
+        preRotaX = this.transform.rotation.eulerAngles.x;
     }
 
     void Update()
@@ -39,25 +41,22 @@ public class CameraController : MonoBehaviour
         // 回転の度合いを設定する
         Vector3 rotaRate = new Vector3((nowX - preX) * speed, -(Input.GetAxis("Mouse Y") * speed), 0);
 
-        /// カメラの回転
+
+        /////// カメラの角度に制限を付けることができたが、制限された角度がだんだんずれてしまう不具合がある。
+        /* カメラの回転 */
         
         /// Y軸回転
         camera.transform.RotateAround(player.transform.position, Vector3.up, rotaRate.x);
 
-        /// X軸回転
-        camera.transform.RotateAround(player.transform.position, transform.right, rotaRate.y);
+        preRotaX += rotaRate.y;
 
-        //if (camera.transform.localEulerAngles.x >= vAngle)
-        //{
-        //    camera.transform.localEulerAngles = new Vector3(vAngle,
-        //                                                    camera.transform.localEulerAngles.y,
-        //                                                    camera.transform.localEulerAngles.z);
-        //}
-        //else if (camera.transform.localEulerAngles.x <= -vAngle)
-        //{
-        //    camera.transform.localEulerAngles = new Vector3(-vAngle,
-        //                                                    camera.transform.localEulerAngles.y,
-        //                                                    camera.transform.localEulerAngles.z);
-        //}
+        if (preRotaX >= -vAngle && preRotaX <= vAngle)
+        {
+            /// X軸回転
+            camera.transform.RotateAround(player.transform.position, transform.right, rotaRate.y);
+
+            camera.transform.eulerAngles.x = Mathf.Clamp(camera.transform.eulerAngles.x, -vAngle, vAngle);
+        }
+
     }
 }
