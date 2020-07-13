@@ -55,7 +55,7 @@ public class CameraController : MonoBehaviour
             /// X軸回転
             camera.transform.RotateAround(player.transform.position, transform.right, rotaRate.y);
 
-            camera.transform.eulerAngles.x = Mathf.Clamp(camera.transform.eulerAngles.x, -vAngle, vAngle);
+          //  camera.transform.eulerAngles.x = Mathf.Clamp(camera.transform.eulerAngles.x, -vAngle, vAngle);
         }
 
     }
