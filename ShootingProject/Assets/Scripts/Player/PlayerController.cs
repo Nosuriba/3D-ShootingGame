@@ -42,35 +42,37 @@ public class PlayerController : MonoBehaviour
 
         /// カメラの正面方向に角度を合わせる
         this.transform.localEulerAngles = new Vector3(0, _camera.transform.eulerAngles.y, 0);
+
+        _rb.velocity *= 0.98f;
     }
 
     private void FixedUpdate()
     {
         /// RigidBodyに力を加える(速度を加算させている)
         _rb.AddForce(_vel, ForceMode.VelocityChange);
+        /// 速度制限
+        Debug.Log(_rb.velocity);
     }
 
     /// 移動処理
     private void Movement()
     {
         _vel = Vector3.zero;
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.W) && _rb.velocity.x <= 5)
         {
-            _vel = transform.forward * 30;
+            _vel = transform.forward * 5;
         }
-        else if (Input.GetKey(KeyCode.S))
+        else if (Input.GetKey(KeyCode.S) && _rb.velocity.x >= -5)
         {
-            _vel = -transform.forward * 30;
+            _vel = -transform.forward * 5;
         }
-        else { }
-
-        if (Input.GetKey(KeyCode.D))
+        else if (Input.GetKey(KeyCode.D) && _rb.velocity.z <= 5)
         {
-            _vel = transform.right * 30;
+            _vel = transform.right * 5;
         }
-        else if (Input.GetKey(KeyCode.A))
+        else if (Input.GetKey(KeyCode.A) && _rb.velocity.z >= -5)
         {
-            _vel = -transform.right * 30;
+            _vel = -transform.right * 5;
         }
         else{}
     }
