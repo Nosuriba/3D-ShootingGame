@@ -121,105 +121,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &549977796
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 549977800}
-  - component: {fileID: 549977799}
-  - component: {fileID: 549977798}
-  - component: {fileID: 549977797}
-  m_Layer: 0
-  m_Name: pCamera
-  m_TagString: MainCamera
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &549977797
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 549977796}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: deb4ddad36713ce479863e6f30d1733c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 1311653756}
-  speed: 2
-  vAngle: 30
---- !u!81 &549977798
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 549977796}
-  m_Enabled: 1
---- !u!20 &549977799
+--- !u!20 &134858477 stripped
 Camera:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 4272718312300832830, guid: 2b529b7b88e9dec4e9c05305f0a44901,
+    type: 3}
+  m_PrefabInstance: {fileID: 2031654599}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 549977796}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
-  m_projectionMatrixMode: 1
-  m_GateFitMode: 2
-  m_FOVAxisMode: 0
-  m_SensorSize: {x: 36, y: 24}
-  m_LensShift: {x: 0, y: 0}
-  m_FocalLength: 50
-  m_NormalizedViewPortRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60
-  orthographic: 0
-  orthographic size: 5
-  m_Depth: -1
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
-  m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
-  m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
-  m_StereoConvergence: 10
-  m_StereoSeparation: 0.022
---- !u!4 &549977800
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 549977796}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.19, y: 1.32, z: -5.63}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.36502}
-  m_Children: []
-  m_Father: {fileID: 1311653762}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1273839732
 GameObject:
   m_ObjectHideFlags: 0
@@ -312,18 +219,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &1311653756 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4272718312496531768, guid: 2b529b7b88e9dec4e9c05305f0a44901,
-    type: 3}
-  m_PrefabInstance: {fileID: 2031654599}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1311653762 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4272718312496531747, guid: 2b529b7b88e9dec4e9c05305f0a44901,
-    type: 3}
-  m_PrefabInstance: {fileID: 2031654599}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1373833515
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -409,7 +304,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _camera
       value: 
-      objectReference: {fileID: 549977799}
+      objectReference: {fileID: 134858477}
     - target: {fileID: 4272718312496531747, guid: 2b529b7b88e9dec4e9c05305f0a44901,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -474,6 +369,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Constraints
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4272718312496531751, guid: 2b529b7b88e9dec4e9c05305f0a44901,
+        type: 3}
+      propertyPath: m_AngularDrag
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 4272718312496531768, guid: 2b529b7b88e9dec4e9c05305f0a44901,
         type: 3}
