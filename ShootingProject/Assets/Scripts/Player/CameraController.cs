@@ -27,19 +27,23 @@ public class CameraController : MonoBehaviour
         preRotaX = this.transform.rotation.eulerAngles.x;
     }
 
-    void Update()
+    private void Update()
     {
         preX = nowX;
-        nowX = Input.GetAxis("Mouse X");
+        nowX = Input.GetAxisRaw("Mouse X");
+    }
 
+    private void FixedUpdate()
+    {
         Rotation();
     }
+
 
     // カメラの回転を行う
     private void Rotation()
     {
         // 回転の度合いを設定する
-        Vector3 rotaRate = new Vector3((nowX - preX) * speed, -(Input.GetAxis("Mouse Y") * speed), 0);
+        Vector3 rotaRate = new Vector3((nowX - preX), -Input.GetAxisRaw("Mouse Y"), 0);
 
 
         /////// カメラの角度に制限を付けることができたが、制限された角度がだんだんずれてしまう不具合がある。
@@ -48,15 +52,8 @@ public class CameraController : MonoBehaviour
         /// Y軸回転
         camera.transform.RotateAround(player.transform.position, Vector3.up, rotaRate.x);
 
-        preRotaX += rotaRate.y;
-
-        if (preRotaX >= -vAngle && preRotaX <= vAngle)
-        {
-            /// X軸回転
-            camera.transform.RotateAround(player.transform.position, transform.right, rotaRate.y);
-
-          //  camera.transform.eulerAngles.x = Mathf.Clamp(camera.transform.eulerAngles.x, -vAngle, vAngle);
-        }
+        /// X軸回転
+        camera.transform.RotateAround(player.transform.position, transform.right, rotaRate.y);
 
     }
 }
