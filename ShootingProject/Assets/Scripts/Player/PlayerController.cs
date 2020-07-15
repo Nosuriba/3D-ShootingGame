@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
 
         if (!_isJump)
         {
-            Falling();
+          Falling();
         }
 
         /// ジャンプ処理
@@ -43,13 +43,16 @@ public class PlayerController : MonoBehaviour
         /// カメラの正面方向に角度を合わせる
         this.transform.localEulerAngles = new Vector3(0, _camera.transform.eulerAngles.y, 0);
 
-        _rb.velocity *= 0.98f;
+        _rb.velocity *= 0.85f;
     }
 
     private void FixedUpdate()
     {
         /// RigidBodyに力を加える(速度を加算させている)
         _rb.AddForce(_vel, ForceMode.VelocityChange);
+
+        Vector3 gravity = new Vector3(0, _vel.y, 0);
+        _rb.AddForce(gravity, ForceMode.Acceleration);
         /// 速度制限
         Debug.Log(_rb.velocity);
     }
@@ -58,23 +61,9 @@ public class PlayerController : MonoBehaviour
     private void Movement()
     {
         _vel = Vector3.zero;
-        if (Input.GetKey(KeyCode.W) && _rb.velocity.x <= 5)
-        {
-            _vel = transform.forward * 5;
-        }
-        else if (Input.GetKey(KeyCode.S) && _rb.velocity.x >= -5)
-        {
-            _vel = -transform.forward * 5;
-        }
-        else if (Input.GetKey(KeyCode.D) && _rb.velocity.z <= 5)
-        {
-            _vel = transform.right * 5;
-        }
-        else if (Input.GetKey(KeyCode.A) && _rb.velocity.z >= -5)
-        {
-            _vel = -transform.right * 5;
-        }
-        else{}
+
+
+        _vel = new Vector3(Input.GetAxisRaw("Horizontal") * 10, 0, Input.GetAxisRaw("Vertical") * 10);
     }
 
     // ジャンプ処理
@@ -87,7 +76,9 @@ public class PlayerController : MonoBehaviour
     private void Falling()
     {
         /// 落下速度の調整
-        _vel.y = (_vel.y >= _maxFallSpeed ? _vel.y - 0.02f : _vel.y);
+        // _vel.y = (_vel.y >= _maxFallSpeed ? _vel.y - 0.02f : _vel.y);
+
+        _vel.y -= 2f;
     }
 
     // 当たり判定が行われている間に入る(敵キャラと当たった時などで使用する)
