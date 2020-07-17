@@ -10,38 +10,28 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private float speed = 2.0f;           // 回転速度
 
-    private float preX;                 
-    private float nowX;
-
     //呼び出し時に実行される関数
     void Start()
     {
-        preX   = nowX = 0f;
+       
     }
 
     private void Update()
     {
-        preX = nowX;
-        nowX = Input.GetAxisRaw("Mouse X");
-
         Rotation();
     }
 
     private void FixedUpdate()
     {
-      
+        // transform.position += player.GetComponent<PlayerController>().GetVel;
     }
-
 
     // カメラの回転を行う
     private void Rotation()
     {
         // 回転の度合いを設定する
-       //  Vector3 rotaRate = new Vector3((nowX - preX), -Input.GetAxisRaw("Mouse Y"), 0);
         Vector3 rotaRate = new Vector3(Input.GetAxis("Mouse X"), -Input.GetAxisRaw("Mouse Y"), 0);
 
-
-        /////// カメラの角度に制限を付けることができたが、制限された角度がだんだんずれてしまう不具合がある。
         /* カメラの回転 */
         
         /// Y軸回転
@@ -50,5 +40,6 @@ public class CameraController : MonoBehaviour
         /// X軸回転
         transform.RotateAround(player.transform.position, transform.right, rotaRate.y);
 
+        player.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
     }
 }
