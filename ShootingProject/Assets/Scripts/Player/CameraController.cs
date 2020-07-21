@@ -34,12 +34,10 @@ public class CameraController : MonoBehaviour
 
         /* カメラの回転 */
         
-        /// Y軸回転
-        transform.RotateAround(player.transform.position, Vector3.up, rotaRate.x);
+        /// Y軸回転(プレイヤーの回転)
+        player.transform.RotateAround(player.transform.position, Vector3.up, rotaRate.x);
 
-        /// X軸回転
+        /// X軸回転(カメラの回転)
         transform.RotateAround(player.transform.position, transform.right, rotaRate.y);
-
-        player.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
     }
 }
