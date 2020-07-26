@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // オブジェクトと当たった時に入る
-    private void OnCollisionEnter(Collision col)
+    private void OnCollisionStay(Collision col)
     {
         /// 床に着地した時に入る処理
         if (col.gameObject.CompareTag("Floor"))
