@@ -5,24 +5,25 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
-    private float _gravity = 1.2f;
+    private float _gravity = 0.9f;
+
+    [SerializeField]
+    private float _power = 5f;                 // 移動時の力量
 
     private Rigidbody _rb;
 
-    private float _horizontal;
-    private float _vertical;
-    private float _fallSpeed;                    // ジャンプ中の速度(名前を変えたほうがいいかも)
+    private float _fallSpeed;                  // ジャンプ中の速度
+    private bool _isJump;                      // true : ジャンプ可能, false : ジャンプ不可能
 
-    private bool _isJump;                        // true : ジャンプ可能, false : ジャンプ不可能
-
-    private const float _jumpSpeed = 9f;         // ジャンプ時の速度
-    private const float _maxFallSpeed = -6.0f;   // 落下時の最大速度
+    private const float _jumpSpeed    = 9f;    // ジャンプ時の速度
+    private const float _maxFallSpeed = -6f;   // 落下時の最大速度
 
     void Start()
     {
         _rb         = GetComponent<Rigidbody>();
-        _fallSpeed  = 0;
+        _fallSpeed  = _jumpSpeed / 2;
         _isJump     = false;
+
     }
 
     private void Update()
@@ -31,16 +32,11 @@ public class PlayerController : MonoBehaviour
         {
             Jumping();
         }
-
-        /// 移動方向の入力値取得
-        _horizontal = Input.GetAxisRaw("Horizontal") * 10;
-        _vertical   = Input.GetAxisRaw("Vertical") * 10;
     }
 
     private void FixedUpdate()
     {
         Movement();
-
         if (!_isJump)
         {
             Falling();
@@ -50,14 +46,15 @@ public class PlayerController : MonoBehaviour
     /// 移動処理
     private void Movement()
     {
+        Vector3 vecV, vecH;
+        vecH = transform.right   * Input.GetAxisRaw("Horizontal") * _power;
+        vecV = transform.forward * Input.GetAxisRaw("Vertical")   * _power;
+
         /// 移動値の取得
-        Vector3 vel = new Vector3(_horizontal,_fallSpeed, _vertical);
+        Vector3 vel = vecH + vecV + new Vector3(0, _fallSpeed, 0);
 
         /// RigidBodyに力を加える(速度を加算させている)
         _rb.AddForce(vel, ForceMode.VelocityChange);
-
-        /// 速度の減速
-        _rb.velocity *= 0.85f;
     }
 
     // ジャンプ処理
@@ -73,7 +70,7 @@ public class PlayerController : MonoBehaviour
         _fallSpeed = (_fallSpeed >= _maxFallSpeed ? _fallSpeed - _gravity : _fallSpeed);
     }
 
-    // オブジェクトと当たった時に入る
+    // オブジェクトに触れている間入る
     private void OnCollisionStay(Collision col)
     {
         /// 床に着地した時に入る処理
